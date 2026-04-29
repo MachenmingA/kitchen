@@ -1,34 +1,41 @@
-# Node
+### Node / Vite / TypeScript
 node_modules/
 dist/
 build/
 .vite/
+.cache/
+/.parcel-cache/
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+tsconfig.tsbuildinfo
+tsconfig.node.tsbuildinfo
 
-# TypeScript
-*.tsbuildinfo
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-pnpm-debug.log*
-
-# Environment
-.env
-.env.local
-.env.*.local
-
-# Editors
+### IDE / Editor
 .vscode/
 .idea/
+*.iml
 
-# OS
+### Environment
+.env
+.env.*
+
+### Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+### OS
 .DS_Store
 Thumbs.db
 
-# Java
+### Java / Maven
 target/
+**/target/
 *.class
 *.jar
+*.war
 
-# Vite caches
-node_modules/.vite
+### Build outputs
+/public/build/
