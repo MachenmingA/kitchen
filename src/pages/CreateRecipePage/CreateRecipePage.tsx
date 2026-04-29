@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChefHat, Plus, Trash2, Save, ArrowLeft, Image } from 'lucide-react';
+import { ChefHat, Plus, Trash2, Save, ArrowLeft, Image, Upload } from 'lucide-react';
 import { recipeApi, getCurrentUser } from '../../services/api';
 import './CreateRecipePage.css';
+
+const API_BASE = '/api';
 
 interface Ingredient {
   name: string;
@@ -22,6 +24,8 @@ export const CreateRecipePage = () => {
   const navigate = useNavigate();
   const user = getCurrentUser();
   const [loading, setLoading] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingStepImage, setUploadingStepImage] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -37,6 +41,64 @@ export const CreateRecipePage = () => {
   const [steps, setSteps] = useState<Step[]>([
     { stepNumber: 1, content: '', imageUrl: '' }
   ]);
+
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem('accessToken');
+    const headers: Record<string, string> = {};
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return headers;
+  };
+
+  const uploadImage = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${API_BASE}/upload/image`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: formData,
+    });
+
+    const result = await response.json();
+    if (result.code !== 200) {
+      throw new Error(result.message || '上传失败');
+    }
+    return result.data.url;
+  };
+
+  const handleCoverImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    try {
+      const url = await uploadImage(file);
+      setFormData({ ...formData, imageUrl: url });
+    } catch (err: any) {
+      alert(err.message || '封面上传失败');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const handleStepImageChange = async (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingStepImage(index);
+    try {
+      const url = await uploadImage(file);
+      const updated = [...steps];
+      updated[index].imageUrl = url;
+      setSteps(updated);
+    } catch (err: any) {
+      alert(err.message || '步骤图片上传失败');
+    } finally {
+      setUploadingStepImage(null);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -226,19 +288,39 @@ export const CreateRecipePage = () => {
             </div>
 
             <div className="form-group">
-              <label>封面图片 URL</label>
-              <div className="image-input-wrapper">
-                <Image size={20} className="image-icon" />
+              <label>封面图片</label>
+              <div className="cover-image-upload">
                 <input
-                  type="text"
-                  value={formData.imageUrl}
-                  onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                  placeholder="输入图片地址，或留空使用默认图片"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleCoverImageChange}
+                  disabled={uploadingImage}
+                  className="file-input"
+                  id="cover-image-input"
                 />
+                <label htmlFor="cover-image-input" className="upload-label">
+                  {uploadingImage ? (
+                    <span className="uploading-text">上传中...</span>
+                  ) : formData.imageUrl ? (
+                    <img src={formData.imageUrl} alt="封面预览" className="cover-preview" />
+                  ) : (
+                    <>
+                      <Upload size={32} className="upload-icon" />
+                      <span className="upload-text">点击上传封面图片</span>
+                      <span className="upload-hint">支持 JPG、PNG，最大 5MB</span>
+                    </>
+                  )}
+                </label>
+                {formData.imageUrl && (
+                  <button
+                    type="button"
+                    className="remove-cover-button"
+                    onClick={() => setFormData({ ...formData, imageUrl: '' })}
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                )}
               </div>
-              {formData.imageUrl && (
-                <img src={formData.imageUrl} alt="预览" className="image-preview" onError={(e) => (e.target as HTMLImageElement).style.display = 'none'} />
-              )}
             </div>
           </div>
 
@@ -299,13 +381,37 @@ export const CreateRecipePage = () => {
                       placeholder={`步骤 ${index + 1} 的详细说明...`}
                       rows={3}
                     />
-                    <input
-                      type="text"
-                      value={step.imageUrl}
-                      onChange={(e) => updateStep(index, 'imageUrl', e.target.value)}
-                      placeholder="步骤图片 URL（选填）"
-                      className="step-image-url"
-                    />
+                    <div className="step-image-upload">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleStepImageChange(index, e)}
+                        disabled={uploadingStepImage === index}
+                        className="file-input"
+                        id={`step-image-${index}`}
+                      />
+                      <label htmlFor={`step-image-${index}`} className={`step-upload-label ${uploadingStepImage === index ? 'uploading' : ''}`}>
+                        {uploadingStepImage === index ? (
+                          <span>上传中...</span>
+                        ) : step.imageUrl ? (
+                          <img src={step.imageUrl} alt={`步骤${index + 1}`} className="step-thumb" />
+                        ) : (
+                          <>
+                            <Image size={16} />
+                            <span>添加步骤图片</span>
+                          </>
+                        )}
+                      </label>
+                      {step.imageUrl && (
+                        <button
+                          type="button"
+                          className="remove-step-image"
+                          onClick={() => updateStep(index, 'imageUrl', '')}
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      )}
+                    </div>
                   </div>
                   <button
                     type="button"

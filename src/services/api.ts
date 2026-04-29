@@ -109,11 +109,15 @@ export interface RecipeDetail {
 }
 
 export const recipeApi = {
-  getAll: () => request<Recipe[]>('/recipes'),
+  getAll: (page = 1, pageSize = 10) =>
+    request<PageResult<Recipe>>(`/recipes?page=${page}&pageSize=${pageSize}`),
+
+  getAllSimple: () => request<Recipe[]>('/recipes/all'),
 
   getById: (id: number) => request<RecipeDetail>(`/recipes/${id}`),
 
-  getByCategory: (category: string) => request<Recipe[]>(`/recipes/category/${category}`),
+  getByCategory: (category: string, page = 1, pageSize = 10) =>
+    request<PageResult<Recipe>>(`/recipes/category/${category}?page=${page}&pageSize=${pageSize}`),
 
   search: (keyword: string) => request<Recipe[]>(`/recipes/search?keyword=${encodeURIComponent(keyword)}`),
 
@@ -264,4 +268,34 @@ export interface Notification {
   content: string;
   isRead: number;
   createTime: string;
+}
+
+// 文件上传 API
+export const uploadApi = {
+  uploadImage: async (file: File): Promise<string> => {
+    const token = localStorage.getItem('accessToken');
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${API_BASE}/upload/image`, {
+      method: 'POST',
+      headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+      body: formData,
+    });
+
+    const result = await response.json();
+    if (result.code !== 200) {
+      throw new Error(result.message || '上传失败');
+    }
+    return result.data.url;
+  },
+};
+
+// 分页结果类型
+export interface PageResult<T> {
+  list: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
 }

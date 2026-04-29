@@ -25,6 +25,18 @@ public interface RecipeMapper {
     @Select("SELECT * FROM recipe WHERE author_id = #{userId} ORDER BY create_time DESC")
     List<Recipe> findByUserId(Long userId);
 
+    @Select("SELECT * FROM recipe ORDER BY create_time DESC LIMIT #{offset}, #{limit}")
+    List<Recipe> findByPage(@Param("offset") int offset, @Param("limit") int limit);
+
+    @Select("SELECT COUNT(*) FROM recipe")
+    long countAll();
+
+    @Select("SELECT * FROM recipe WHERE category = #{category} ORDER BY create_time DESC LIMIT #{offset}, #{limit}")
+    List<Recipe> findByCategoryPage(@Param("category") String category, @Param("offset") int offset, @Param("limit") int limit);
+
+    @Select("SELECT COUNT(*) FROM recipe WHERE category = #{category}")
+    long countByCategory(String category);
+
     @Insert("INSERT INTO recipe(title, description, image_url, category, difficulty, cook_time, servings, " +
             "author_id, author_name, author_avatar, favorites_count, views_count, create_time, update_time) " +
             "VALUES(#{title}, #{description}, #{imageUrl}, #{category}, #{difficulty}, #{cookTime}, #{servings}, " +

@@ -2,6 +2,10 @@ server:
   port: 8080
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
   datasource:
     url: jdbc:mysql://localhost:3306/my_kitchen?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
@@ -17,6 +21,14 @@ spring:
           max-active: 8
           max-idle: 8
           min-idle: 0
+  web:
+    resources:
+      static-locations: classpath:/static/,file:uploads/
+
+app:
+  upload:
+    path: uploads
+    base-url: http://localhost:8080
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

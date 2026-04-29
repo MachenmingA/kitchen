@@ -1,5 +1,6 @@
 package com.mykitchen.service;
 
+import com.mykitchen.controller.PageResult;
 import com.mykitchen.entity.Recipe;
 import com.mykitchen.entity.Ingredient;
 import com.mykitchen.entity.Step;
@@ -77,7 +78,21 @@ public class RecipeService {
     public List<Recipe> getPopularRecipes(int limit) {
         return recipeMapper.findPopular((long) limit);
     }
-    
+
+    public PageResult<Recipe> getRecipesByPage(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        List<Recipe> recipes = recipeMapper.findByPage(offset, pageSize);
+        long total = recipeMapper.countAll();
+        return PageResult.of(recipes, total, page, pageSize);
+    }
+
+    public PageResult<Recipe> getRecipesByCategoryPage(String category, int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        List<Recipe> recipes = recipeMapper.findByCategoryPage(category, offset, pageSize);
+        long total = recipeMapper.countByCategory(category);
+        return PageResult.of(recipes, total, page, pageSize);
+    }
+
     public List<Ingredient> getIngredients(Long recipeId) {
         return ingredientMapper.findByRecipeId(recipeId);
     }

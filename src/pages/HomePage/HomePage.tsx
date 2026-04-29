@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, ArrowRight } from 'lucide-react';
+import { Heart, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { RecipeCard } from '../../components/RecipeCard';
 import { CategoryPill } from '../../components/CategoryPill';
 import { Recipe } from '../../services/api';
@@ -11,9 +11,12 @@ interface HomePageProps {
   recipes: Recipe[];
   onFavorite: (id: number) => void;
   searchQuery: string;
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 }
 
-export function HomePage({ recipes, onFavorite, searchQuery }: HomePageProps) {
+export function HomePage({ recipes, onFavorite, searchQuery, currentPage, totalPages, onPageChange }: HomePageProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const filteredRecipes = recipes.filter((recipe) => {
@@ -146,6 +149,51 @@ export function HomePage({ recipes, onFavorite, searchQuery }: HomePageProps) {
             ))}
           </div>
         </section>
+      )}
+
+      {/* Pagination */}
+      {!searchQuery && !selectedCategory && totalPages > 1 && (
+        <div className={styles.pagination}>
+          <button
+            className={styles.pageButton}
+            onClick={() => onPageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft size={20} />
+          </button>
+          
+          {Array.from({ length: totalPages }, (_, i) => i + 1)
+            .filter(page => page === 1 || page === totalPages || Math.abs(page - currentPage) <= 2)
+            .reduce<(number | 'ellipsis')[]>((acc, page, idx, arr) => {
+              if (idx > 0 && page - (arr[idx - 1] as number) > 1) {
+                acc.push('ellipsis');
+              }
+              acc.push(page);
+              return acc;
+            }, [])
+            .map((item, idx) => 
+              item === 'ellipsis' ? (
+                <span key={`ellipsis-${idx}`} className={styles.ellipsis}>...</span>
+              ) : (
+                <button
+                  key={item}
+                  className={`${styles.pageButton} ${currentPage === item ? styles.activePage : ''}`}
+                  onClick={() => onPageChange(item as number)}
+                >
+                  {item}
+                </button>
+              )
+            )
+          }
+          
+          <button
+            className={styles.pageButton}
+            onClick={() => onPageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
       )}
     </div>
   );

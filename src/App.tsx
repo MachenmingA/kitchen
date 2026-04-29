@@ -9,23 +9,30 @@ import { LoginPage } from './pages/LoginPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { CreateRecipePage } from './pages/CreateRecipePage';
 import { RegisterPage } from './pages/RegisterPage';
-import { recipeApi, favoriteApi, getCurrentUser, isLoggedIn, Recipe, logout } from './services/api';
+import { recipeApi, favoriteApi, getCurrentUser, isLoggedIn, Recipe, logout, PageResult } from './services/api';
 import './styles/globals.css';
 
 function App() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [pageResult, setPageResult] = useState<PageResult<Recipe> | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [user, setUser] = useState(getCurrentUser());
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const fetchRecipes = useCallback(async () => {
+  const fetchRecipes = useCallback(async (page = 1) => {
     try {
-      const data = await recipeApi.getAll();
+      const data = await recipeApi.getAll(page, 12);
+      setPageResult(data);
+      setCurrentPage(data.page);
+      setTotalPages(data.totalPages);
+      
       const currentUser = getCurrentUser();
       const userId = currentUser?.id || 1;
 
       const recipesWithFavorite = await Promise.all(
-        data.map(async (recipe) => ({
+        data.list.map(async (recipe) => ({
           ...recipe,
           isFavorited: currentUser ? await favoriteApi.check(userId, recipe.id) : false,
         }))
@@ -39,9 +46,16 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetchRecipes();
+    fetchRecipes(currentPage);
     setUser(getCurrentUser());
-  }, [fetchRecipes]);
+  }, [fetchRecipes, currentPage]);
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const handleFavorite = async (id: number) => {
     const recipe = recipes.find((r) => r.id === id);
@@ -102,6 +116,9 @@ function App() {
                 recipes={recipes}
                 onFavorite={handleFavorite}
                 searchQuery={searchQuery}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
               />
             }
           />

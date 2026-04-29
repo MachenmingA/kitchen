@@ -198,6 +198,139 @@
   border-radius: var(--radius-md);
 }
 
+/* 封面图片上传 */
+.cover-image-upload {
+  position: relative;
+}
+
+.file-input {
+  display: none;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 40px 20px;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-background);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.upload-label:hover {
+  border-color: var(--color-primary);
+  background: rgba(255, 107, 53, 0.05);
+}
+
+.upload-icon {
+  color: var(--color-text-secondary);
+}
+
+.upload-text {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.upload-hint {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.cover-preview {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.uploading-text {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.remove-cover-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.remove-cover-button:hover {
+  background: #dc2626;
+}
+
+/* 步骤图片上传 */
+.step-image-upload {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.step-upload-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.step-upload-label:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.step-upload-label.uploading {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.step-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.remove-step-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.remove-step-image:hover {
+  border-color: #dc2626;
+  color: #dc2626;
+  background: #fef2f2;
+}
+
 .ingredients-list {
   display: flex;
   flex-direction: column;

@@ -19,6 +19,8 @@
 - [x] 收藏/取消收藏
 - [x] 评论功能
 - [x] 评分系统（1-5星）
+- [x] 图片上传功能（支持封面上传和步骤图片）
+- [x] 分页功能
 
 ### 社交功能
 - [x] 关注/取消关注用户
@@ -33,6 +35,7 @@
 - [x] 操作日志记录 (AOP)
 - [x] 标签系统
 - [x] 热门内容排行
+- [x] 单元测试（后端 Service/Controller + 前端 API）
 
 ## 技术栈
 
@@ -47,6 +50,8 @@
 | 缓存 | Redis |
 | 认证 | JWT + Spring Security |
 | 文档 | Swagger/OpenAPI 3.0 |
+| 后端测试 | JUnit 5 + Mockito |
+| 前端测试 | Vitest + React Testing Library |
 
 ## 环境要求
 
@@ -149,6 +154,11 @@ npm run dev
 | POST | /api/recipes | 创建食谱 |
 | PUT | /api/recipes/{id} | 更新食谱 |
 | DELETE | /api/recipes/{id} | 删除食谱 |
+
+### 文件上传
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| POST | /api/upload/image | 上传图片 |
 
 ### 收藏相关
 | 方法 | 路径 | 说明 |

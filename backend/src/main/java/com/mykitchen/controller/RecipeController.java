@@ -1,5 +1,6 @@
 package com.mykitchen.controller;
 
+import com.mykitchen.controller.PageResult;
 import com.mykitchen.entity.Recipe;
 import com.mykitchen.entity.Ingredient;
 import com.mykitchen.entity.Step;
@@ -21,8 +22,16 @@ public class RecipeController {
     private RecipeService recipeService;
 
     @GetMapping
-    @Operation(summary = "获取所有食谱")
-    public Result<List<Recipe>> getAllRecipes() {
+    @Operation(summary = "获取所有食谱（分页）")
+    public Result<PageResult<Recipe>> getAllRecipes(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        return Result.success(recipeService.getRecipesByPage(page, pageSize));
+    }
+
+    @GetMapping("/all")
+    @Operation(summary = "获取所有食谱（不分页）")
+    public Result<List<Recipe>> getAllRecipesSimple() {
         return Result.success(recipeService.getAllRecipes());
     }
 
@@ -41,8 +50,11 @@ public class RecipeController {
     }
 
     @GetMapping("/category/{category}")
-    public Result<List<Recipe>> getByCategory(@PathVariable String category) {
-        return Result.success(recipeService.getRecipesByCategory(category));
+    public Result<PageResult<Recipe>> getByCategory(
+            @PathVariable String category,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        return Result.success(recipeService.getRecipesByCategoryPage(category, page, pageSize));
     }
 
     @GetMapping("/search")
