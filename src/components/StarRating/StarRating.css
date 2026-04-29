@@ -1,0 +1,39 @@
+.star-rating {
+  display: flex;
+  gap: 4px;
+}
+
+.star-rating.small {
+  gap: 2px;
+}
+
+.star-rating.large {
+  gap: 8px;
+}
+
+.star {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.star:hover:not(:disabled) {
+  transform: scale(1.2);
+}
+
+.star:disabled {
+  cursor: default;
+}
+
+.star-rating.readonly .star {
+  cursor: default;
+}
+
+.star-rating.readonly .star:hover {
+  transform: none;
+}

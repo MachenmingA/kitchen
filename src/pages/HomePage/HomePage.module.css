@@ -1,0 +1,370 @@
+.page {
+  padding-bottom: 60px;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8F66 100%);
+  padding: 60px 0;
+  color: white;
+  overflow: hidden;
+}
+
+.heroContent {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.heroSubtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.heroImages {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.heroImageWrapper {
+  flex: 1;
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--transition-normal);
+  max-width: 320px;
+}
+
+.heroImageWrapper:first-child {
+  transform: scale(1.05);
+  z-index: 1;
+}
+
+.heroImageWrapper:hover {
+  transform: scale(1.1);
+  z-index: 2;
+}
+
+.heroImage {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.heroImageLabel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 16px 12px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white;
+}
+
+/* Sections */
+.section {
+  padding: 48px 0;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 0 24px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.sectionLink {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  transition: gap var(--transition-fast);
+}
+
+.sectionLink:hover {
+  gap: 8px;
+}
+
+.clearFilter {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+}
+
+.clearFilter:hover {
+  color: var(--color-primary);
+  background: rgba(255, 107, 53, 0.1);
+}
+
+/* Categories */
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+/* Recipe Grid */
+.recipeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.recipeCardWrapper {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Empty State */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+}
+
+.emptyIcon {
+  color: var(--color-border);
+  margin-bottom: 16px;
+}
+
+.emptyState h3 {
+  font-size: 1.25rem;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+
+.emptyState p {
+  color: var(--color-text-secondary);
+}
+
+/* Popular Section */
+.popularGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.popularItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.popularItem:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.popularRank {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  min-width: 32px;
+}
+
+.popularImageWrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.popularImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.popularInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.popularTitle {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.popularTitle:hover {
+  color: var(--color-primary);
+}
+
+.popularAuthor {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+/* Authors */
+.authors {
+  display: flex;
+  gap: 20px;
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.authorCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+  min-width: 280px;
+}
+
+.authorAvatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--color-primary);
+}
+
+.authorInfo {
+  flex: 1;
+}
+
+.authorName {
+  display: block;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.authorBio {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+}
+
+.authorStats {
+  display: flex;
+  gap: 16px;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 0;
+  }
+
+  .heroTitle {
+    font-size: 1.75rem;
+  }
+
+  .heroImages {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .heroImageWrapper,
+  .heroImageWrapper:first-child {
+    transform: none;
+    max-width: 100%;
+  }
+
+  .heroImageWrapper:hover {
+    transform: scale(1.02);
+  }
+
+  .sectionHeader {
+    padding: 0 16px;
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+
+  .categories {
+    justify-content: flex-start;
+    padding: 0 16px;
+  }
+
+  .recipeGrid {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .popularGrid {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .authors {
+    padding: 0 16px;
+  }
+
+  .authorCard {
+    min-width: 260px;
+  }
+}
