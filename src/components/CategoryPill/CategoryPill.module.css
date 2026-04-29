@@ -1,0 +1,65 @@
+.pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 20px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  min-width: 100px;
+}
+
+.pill:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.selected {
+  background: var(--color-primary);
+  color: white;
+}
+
+.selected .name {
+  color: white;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: var(--color-background);
+  border-radius: 50%;
+  color: var(--color-primary);
+  transition: all var(--transition-fast);
+}
+
+.selected .iconWrapper {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 768px) {
+  .pill {
+    padding: 12px 16px;
+    min-width: 80px;
+  }
+
+  .iconWrapper {
+    width: 48px;
+    height: 48px;
+  }
+
+  .name {
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,488 @@
+.recipe-page {
+  min-height: calc(100vh - 64px);
+  background: var(--color-background);
+}
+
+.recipe-page-loading,
+.recipe-page-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 16px;
+  color: var(--color-text-secondary);
+}
+
+.recipe-page-error h2 {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.recipe-page-error button {
+  padding: 10px 24px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+
+.recipe-hero {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.recipe-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 40%, rgba(0,0,0,0.5) 100%);
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.back-button:hover {
+  background: white;
+  transform: translateX(-4px);
+}
+
+.recipe-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.action-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: var(--color-text-secondary);
+}
+
+.action-button:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+.action-button.active {
+  color: #ef4444;
+}
+
+.recipe-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.recipe-header {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  margin-top: -60px;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+}
+
+.recipe-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 12px 0;
+}
+
+.recipe-description {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+}
+
+.recipe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--color-background);
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.meta-item.difficulty {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.meta-item.category {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.recipe-rating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  margin: 20px 0;
+}
+
+.rating-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rating-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.rating-count {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 4px;
+}
+
+.star-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  transition: transform 0.2s;
+}
+
+.star-button:hover {
+  transform: scale(1.2);
+}
+
+.recipe-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-label {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.author-name {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.recipe-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 24px 0;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 14px 24px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-button:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.tab-button.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.ingredients-section,
+.steps-section {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  min-height: 200px;
+}
+
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ingredient-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.ingredient-item:last-child {
+  border-bottom: none;
+}
+
+.ingredient-name {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.ingredient-amount {
+  color: var(--color-text-secondary);
+  background: var(--color-background);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+}
+
+.steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: step;
+}
+
+.step-item {
+  display: flex;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.step-item:last-child {
+  border-bottom: none;
+}
+
+.step-number {
+  width: 36px;
+  height: 36px;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content p {
+  margin: 0 0 12px 0;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+}
+
+.step-image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: var(--radius-md);
+  margin-top: 8px;
+}
+
+.comments-section {
+  margin-top: 32px;
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+}
+
+.comments-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 20px 0;
+  font-size: 1.1rem;
+}
+
+.comment-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comment-input-wrapper {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+}
+
+.comment-input-wrapper textarea {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  resize: none;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+
+.comment-input-wrapper textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.comment-input-wrapper button {
+  padding: 12px 24px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: all 0.2s;
+}
+
+.comment-input-wrapper button:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+}
+
+.comment-input-wrapper button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comment-item {
+  display: flex;
+  gap: 12px;
+}
+
+.comment-body {
+  flex: 1;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.comment-time {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.comment-content {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.empty-message {
+  text-align: center;
+  color: var(--color-text-secondary);
+  padding: 40px;
+}
+
+@media (max-width: 640px) {
+  .recipe-hero {
+    height: 300px;
+  }
+
+  .recipe-content {
+    padding: 16px;
+  }
+
+  .recipe-header {
+    padding: 20px;
+    margin-top: -40px;
+  }
+
+  .recipe-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .recipe-meta {
+    gap: 8px;
+  }
+
+  .recipe-rating {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .comment-input-wrapper {
+    flex-direction: column;
+  }
+
+  .comment-input-wrapper button {
+    width: 100%;
+  }
+}
